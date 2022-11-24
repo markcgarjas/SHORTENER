@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_025436) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_24_070919) do
   create_table "posts", charset: "utf8mb4", force: :cascade do |t|
     t.string "post_long_url"
     t.string "post_short_url"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_025436) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "delete_at"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 

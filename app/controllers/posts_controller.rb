@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :new, :create]
+  before_action :find_post_params, only: :destroy
 
   def index
     @posts = Post.includes(:user).all
@@ -23,6 +24,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post.user = current_user
+    @post.destroy
+    redirect_to posts_path
+  end
+
   def alias
     @post = Post.find_by(post_alias: params[:post_alias])
     redirect_to 'https://stackoverflow.com/questions/15484411/get-my-domain-in-rails-controller', allow_other_host: true
@@ -32,5 +39,9 @@ class PostsController < ApplicationController
 
   def set_post_params
     params.require(:post).permit(:post_long_url, :post_short_url, :post_alias)
+  end
+
+  def find_post_params
+    @post = Post.find(params[:id])
   end
 end
