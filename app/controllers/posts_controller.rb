@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :new, :create]
+  before_action :authenticate_user!, except: [ :new, :create]
   before_action :find_post_params, only: :destroy
   require 'csv'
 
@@ -55,7 +55,7 @@ class PostsController < ApplicationController
 
   def alias
     @post = Post.find_by(post_alias: params[:post_alias])
-    redirect_to 'https://stackoverflow.com/questions/15484411/get-my-domain-in-rails-controller', allow_other_host: true
+    redirect_to "#{@post.post_long_url}", allow_other_host: true
   end
 
   private
