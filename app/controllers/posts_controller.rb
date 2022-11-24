@@ -39,6 +39,11 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(set_post_params)
     @post.user = current_user
+    if Rails.env.development?
+      @post.ip_address = Net::HTTP.get(URI.parse('http://checkip.amazonaws.com/')).squish
+    else
+      @post.ip_address = request.remote_ip
+    end
     if @post.save
       flash[:notice] = "Short Url was created successfully."
       redirect_to posts_path
