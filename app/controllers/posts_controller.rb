@@ -1,11 +1,34 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :new, :create]
   before_action :find_post_params, only: :destroy
+  require 'csv'
 
   def index
     @posts = Post.includes(:user).all
     @url = request.base_url
     @count = Post.count
+    respond_to do |format|
+      format.html
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          csv << [User.human_attribute_name(:email),
+                  Post.human_attribute_name(:id),
+                  Post.human_attribute_name(:post_long_url),
+                  Post.human_attribute_name(:post_short_url),
+                  Post.human_attribute_name(:post_alias),
+                  Post.human_attribute_name(:created_at)]
+          @posts.each do |p|
+            csv << [p.user.email,
+                    p.id,
+                    p.post_long_url,
+                    p.post_short_url,
+                    p.post_alias,
+                    p.created_at]
+          end
+        end
+        send_data csv_string, :filename => "posts-#{Time.current.to_s}.csv"
+      }
+    end
   end
 
   def new
