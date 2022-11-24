@@ -1,0 +1,20 @@
+<h1>Create URL</h1>
+
+<%= form_with model: @post do |f| %>
+  <% if @post.errors.any? %>
+    <ul>
+      <% @post.errors.each do |error| %>
+        <ol><%= error.full_message %></ol>
+      <% end %>
+    </ul>
+  <% end %>
+  <div>
+    <%= f.label "Enter a long URL to make short URL" %><br>
+    <%= f.text_field :post_long_url %>
+  </div>
+  <div>
+    <%= f.label "Customize your link" %><br>
+    <%= f.select :post_short_url, ["localhost:3000/"] %><%= f.text_field :post_alias, value: @generate_numbers, :maxlength => 4, :size => 7%>
+  </div>
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,23 @@
+<h1>List of Short URLs</h1>
+
+<table>
+  <thead>
+  <tr>
+    <td>Long Url</td>
+    <td>Short Url</td>
+  </tr>
+  </thead>
+  <tbody>
+  <% @posts.each do |post| %>
+    <tr>
+      <td><%= post.post_long_url %></td>
+      <td><%= post.post_short_url %></td>
+      <td><%= post.post_alias %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Create Short URL", new_post_path %>
+
+
