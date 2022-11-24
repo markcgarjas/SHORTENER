@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   def index
     @posts = Post.includes(:user).all
     @url = request.base_url
-
+    @count = Post.count
   end
 
   def new
