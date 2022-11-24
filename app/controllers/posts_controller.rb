@@ -44,6 +44,7 @@ class PostsController < ApplicationController
     else
       @post.ip_address = request.remote_ip
     end
+    @post.user_agent = request.user_agent
     if @post.save
       flash[:notice] = "Short Url was created successfully."
       redirect_to posts_path

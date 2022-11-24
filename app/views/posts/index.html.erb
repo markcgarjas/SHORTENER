@@ -9,6 +9,7 @@
     <td>Click Counts</td>
     <td>Short Url</td>
     <td>Action</td>
+    <td>User Agent</td>
     <td>IP Address</td>
   </tr>
   </thead>
@@ -21,8 +22,9 @@
         <span data-clipboard-target="alias"><%= link_to "#{post.post_short_url}#{post.post_alias}", post.post_alias %></span>
         <button data-action="click->clipboard#copy">copy</button>
       </td>
-
       <td><%= button_to 'Delete', post_path(post), :onclick => "return confirm('Are you sure you want to delete?')", method: :delete if post.user == current_user %></td>
+      <td><%= post.user_agent %></td>
+      <td><%= post.ip_address %></td>
     </tr>
   <% end %>
   </tbody>
