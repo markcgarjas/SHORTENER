@@ -11,8 +11,10 @@
   <% @posts.each do |post| %>
     <tr>
       <td><%= post.post_long_url %></td>
-      <td><%= post.post_short_url %></td>
-      <td><%= post.post_alias %></td>
+      <td data-controller='clipboard'>
+        <span data-clipboard-target="alias"><%= link_to "#{post.post_short_url}#{post.post_alias}", post.post_alias %></span>
+        <button data-action="click->clipboard#copy">copy</button>
+      </td>
     </tr>
   <% end %>
   </tbody>
