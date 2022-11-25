@@ -10,11 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_102208) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_25_033152) do
   create_table "posts", charset: "utf8mb4", force: :cascade do |t|
-    t.string "post_long_url"
-    t.string "post_short_url"
-    t.string "post_alias"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -22,6 +19,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_102208) do
     t.integer "clicked", default: 0
     t.string "ip_address"
     t.string "user_agent"
+    t.string "short_url"
+    t.string "long_url"
+    t.string "alias"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
