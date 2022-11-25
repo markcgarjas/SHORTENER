@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
-  before_action :find_post_params, only: :destroy
+  before_action :set_post, only: :destroy
   require 'csv'
 
   def index
@@ -13,16 +13,16 @@ class PostsController < ApplicationController
         csv_string = CSV.generate do |csv|
           csv << [User.human_attribute_name(:email),
                   Post.human_attribute_name(:id),
-                  Post.human_attribute_name(:post_long_url),
-                  Post.human_attribute_name(:post_short_url),
-                  Post.human_attribute_name(:post_alias),
+                  Post.human_attribute_name(:long_url),
+                  Post.human_attribute_name(:short_url),
+                  Post.human_attribute_name(:alias),
                   Post.human_attribute_name(:created_at)]
           @posts.each do |p|
             csv << [p.user.email,
                     p.id,
-                    p.post_long_url,
-                    p.post_short_url,
-                    p.post_alias,
+                    p.long_url,
+                    p.short_url,
+                    p.alias,
                     p.created_at]
           end
         end
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(set_post_params)
+    @post = Post.new(post_params)
     @post.user = current_user
     if Rails.env.development?
       @post.ip_address = Net::HTTP.get(URI.parse('http://checkip.amazonaws.com/')).squish
@@ -60,18 +60,18 @@ class PostsController < ApplicationController
   end
 
   def alias
-    @post = Post.find_by(post_alias: params[:post_alias])
+    @post = Post.find_by(alias: params[:alias])
     @post.update_attribute(:clicked, @post.clicked + 1)
-    redirect_to "#{@post.post_long_url}", allow_other_host: true
+    redirect_to "#{@post.long_url}", allow_other_host: true
   end
 
   private
 
-  def set_post_params
-    params.require(:post).permit(:post_long_url, :post_short_url, :post_alias)
+  def post_params
+    params.require(:post).permit(:long_url, :short_url, :alias)
   end
 
-  def find_post_params
+  def set_post
     @post = Post.find(params[:id])
   end
 end

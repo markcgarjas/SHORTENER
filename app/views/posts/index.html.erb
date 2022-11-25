@@ -16,13 +16,13 @@
   <tbody>
   <% @posts.each do |post| %>
     <tr>
-      <td><%= post.post_long_url %></td>
+      <td><%= post.long_url %></td>
       <td><%= post.clicked %></td>
       <td data-controller='clipboard'>
-        <span data-clipboard-target="alias"><%= link_to "#{post.post_short_url}#{post.post_alias}", post.post_alias %></span>
+        <span data-clipboard-target="alias"><%= link_to "#{post.short_url}#{post.alias}", post.alias %></span>
         <button data-action="click->clipboard#copy">copy</button>
       </td>
-      <td><%= button_to 'Delete', post_path(post), :onclick => "return confirm('Are you sure you want to delete?')", method: :delete if post.user == current_user %></td>
+      <td><%= button_to 'Delete', post_path(post), { onclick: "return confirm('Are you sure you want to delete?')", method: :delete } if post.user == current_user %></td>
       <td><%= post.user_agent %></td>
       <td><%= post.ip_address %></td>
     </tr>

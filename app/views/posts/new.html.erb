@@ -10,11 +10,11 @@
   <% end %>
   <div>
     <%= f.label "Enter a long URL to make short URL" %><br>
-    <%= f.text_field :post_long_url %>
+    <%= f.text_field :long_url %>
   </div>
   <div>
     <%= f.label "Customize your link" %><br>
-    <%= f.select :post_short_url, ["localhost:3000/"] %><%= f.text_field :post_alias, value: @generate_numbers, :maxlength => 4, :size => 7%>
+    <%= f.select :short_url, ["localhost:3000/"] %><%= f.text_field :alias, value: @generate_numbers, maxlength: 4, :size => 7 %>
   </div>
   <%= f.submit %>
 <% end %>
